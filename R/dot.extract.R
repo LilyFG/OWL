@@ -8,12 +8,12 @@ dot.extract <- function(df){
       
       dot$accuracy[dot$response == dot$trial.correctResponse] <- 1
       dot$accuracy[is.na(dot$accuracy) & dot$response %in% c("yes","no")] <- 0 
-      dot.acc <- melt(dot[dot$phase==3 & dot$trial.trialType=='neutral' & dot$trial.correctResponse=='yes', 
+      dot.acc <- reshape::melt(dot[dot$phase==3 & dot$trial.trialType=='neutral' & dot$trial.correctResponse=='yes', 
                           c("accuracy", "trial.selfOther", "trial.consistency")], 
                       id=c("trial.selfOther", "trial.consistency"),
                       na.rm=TRUE)
       dot.acc <- as.data.frame(cast(dot.acc, trial.selfOther~trial.consistency~variable, mean))
-      dot.RT <- melt(dot[dot$phase==3 & dot$accuracy==1 & dot$trial.trialType=='neutral' & dot$trial.correctResponse=='yes',  
+      dot.RT <- reshape::melt(dot[dot$phase==3 & dot$accuracy==1 & dot$trial.trialType=='neutral' & dot$trial.correctResponse=='yes',  
                          c("responseTime", "trial.selfOther", "trial.consistency")], 
                      id=c("trial.selfOther", "trial.consistency"),
                      na.rm=TRUE)

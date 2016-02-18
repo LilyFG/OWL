@@ -7,7 +7,7 @@ dass.extract <- function(df){
     if(!is.null(dass)){
       dass <- dass[complete.cases(dass$score),c("subscale","score")]
       if(nrow(dass)==21){
-#         dassm <- melt(dass, id="subscale")
+#         dassm <- reshape::melt(dass, id="subscale")
 #         dass <- cast(dassm, subscale~variable, sum)
         # spit out the data frame containing the variables of interest
         data.frame(

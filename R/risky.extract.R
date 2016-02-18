@@ -75,7 +75,7 @@ risky.extract <- function(df){
       })))
       
       # create a long format data frame with safe open data for calculatin the indifference point
-      riskySafesLong <- melt(risky[risky$trial.phase=="test",c("previous.bust","previous.missedBinary",safes)], id.vars=c("previous.bust","previous.missedBinary"))
+      riskySafesLong <- reshape::melt(risky[risky$trial.phase=="test",c("previous.bust","previous.missedBinary",safes)], id.vars=c("previous.bust","previous.missedBinary"))
       riskySafesLong$safe <- as.integer(substr(as.character(riskySafesLong$variable),5,5))
       
       summary <- ddply(riskySafesLong, .(safe), summarise, meanNext=mean(value, na.rm=TRUE))

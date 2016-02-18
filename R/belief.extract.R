@@ -11,7 +11,7 @@ belief.extract <- function(df){
       belief$accuracy[belief$response == belief$trial.correctResponse] <- 1
       # 
       belief$accuracy[is.na(belief$accuracy) & belief$response %in% c("red","blue")] <- 0
-      belief.acc <- melt(belief[belief$phase==3,c("trial.type", "accuracy", "trial.conditionB", 
+      belief.acc <- reshape::melt(belief[belief$phase==3,c("trial.type", "accuracy", "trial.conditionB", 
                                                   "trial.conditionD")], 
                          id=c("trial.type", "trial.conditionB", "trial.conditionD"),
                           measure.vars = "accuracy",
@@ -19,7 +19,7 @@ belief.extract <- function(df){
       belief.acc <- as.data.frame(cast(belief.acc, trial.type~trial.conditionB~trial.conditionD, mean))
       
       # RTs are trimmed to include correct trials only but no other trimming takes place. Note that responses time is limited at the upper end to 8000ms
-      belief.RT <- melt(belief[belief$phase==3 & belief$accuracy==1, c("responseTime", "trial.type", "trial.conditionB", 
+      belief.RT <- reshape::melt(belief[belief$phase==3 & belief$accuracy==1, c("responseTime", "trial.type", "trial.conditionB", 
                                                                        "trial.conditionD")], 
                         id.vars=c("trial.type", "trial.conditionB", "trial.conditionD"),
                         measure.vars = "responseTime",

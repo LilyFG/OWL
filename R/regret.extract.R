@@ -60,11 +60,11 @@ regret.extract <- function(df){
                             + regret$wheels.right.p * (regret$wheels.right.y - (regret$wheels.right.x * regret$wheels.right.p + regret$wheels.right.y * (1 - regret$wheels.right.p)))^2))
       
       
-      regret.rating <- melt(regret[regret$phase=='test' & regret$trial.obtained %in% c(-50, 50) & regret$trial.unobtained %in% c(-200, 200), 
+      regret.rating <- reshape::melt(regret[regret$phase=='test' & regret$trial.obtained %in% c(-50, 50) & regret$trial.unobtained %in% c(-200, 200), 
                                    c("rating", "trialType", "trial.obtained", "trial.unobtained")], 
                             id=c("trialType", "trial.obtained", "trial.unobtained"),
                             na.rm=TRUE)
-      regret.rating.unobtained <-  melt(regret[regret$phase=='test' & regret$trial.obtained %in% c(-50, 50) & regret$trial.unobtained %in% c(-200, 200), 
+      regret.rating.unobtained <-  reshape::melt(regret[regret$phase=='test' & regret$trial.obtained %in% c(-50, 50) & regret$trial.unobtained %in% c(-200, 200), 
                                                c("rating", "trialType", "trial.unobtained")], 
                                         id=c("trialType", "trial.unobtained"),
                                         na.rm=TRUE)
@@ -72,7 +72,7 @@ regret.extract <- function(df){
       regret.rating <- as.data.frame(cast(regret.rating, trialType~trial.obtained~trial.unobtained~variable, mean))
       regret.rating.unobtained <- as.data.frame(cast(regret.rating.unobtained, trialType~trial.unobtained~variable, mean))
       regret.rating.unobtained$diff <- regret.rating.unobtained$`-200.rating` - regret.rating.unobtained$`200.rating`
-      regret.RT <- melt(regret[regret$phase=='test' & regret$trial.obtained %in% c(50, -50) & regret$trial.unobtained %in% c(200, -200), 
+      regret.RT <- reshape::melt(regret[regret$phase=='test' & regret$trial.obtained %in% c(50, -50) & regret$trial.unobtained %in% c(200, -200), 
                                c("ratingResponseTime", "trialType", "trial.obtained", "trial.unobtained")], 
                         id=c("trialType", "trial.obtained", "trial.unobtained"),
                         na.rm=TRUE)
