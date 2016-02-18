@@ -8,7 +8,7 @@
 #' import.owl(choose = FALSE)
 #' @export
 import.owl <- function(choose = F){
-  file <- ifelse(choose, file.choose(), "results.data")
+  file <- ifelse(choose, file.choose(), "results.json")
   #import the data file
   dat <- jsonlite::fromJSON(file, flatten = T)
 
