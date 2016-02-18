@@ -8,7 +8,7 @@ bis.extract <- function(df){
     if(!is.null(bis)){
       bis <- bis[complete.cases(bis),c("subscale","score")]
       if(nrow(bis)==30){
-        bism <- reshape::melt(bis, id="subscale")
+        bism <- reshape::melt.data.frame(bis, id="subscale")
         bis <- cast(bism, subscale~variable, sum)
         bis[7,] <- c("total", sum(bis$score))
         

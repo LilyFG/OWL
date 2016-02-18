@@ -7,7 +7,7 @@ tipi.extract <- function(df){
     if(!is.null(tipi) && sum(tipi$responseType!="skip")>0){
       tipi <- tipi[complete.cases(tipi),c("subscale","score")]
       if(nrow(tipi)==10){
-        tipim <- reshape::melt(tipi, id="subscale")
+        tipim <- reshape::melt.data.frame(tipi, id="subscale")
         tipi <- cast(tipim, subscale~variable, sum)
         
         data.frame(
