@@ -16,7 +16,7 @@ belief.extract <- function(df){
                          id=c("trial.type", "trial.conditionB", "trial.conditionD"),
                           measure.vars = "accuracy",
                          na.rm=TRUE)
-      belief.acc <- as.data.frame(cast(belief.acc, trial.type~trial.conditionB~trial.conditionD, mean))
+      belief.acc <- as.data.frame(reshape::cast(belief.acc, trial.type~trial.conditionB~trial.conditionD, mean))
       
       # RTs are trimmed to include correct trials only but no other trimming takes place. Note that responses time is limited at the upper end to 8000ms
       belief.RT <- reshape::melt.data.frame(belief[belief$phase==3 & belief$accuracy==1, c("responseTime", "trial.type", "trial.conditionB", 
@@ -26,7 +26,7 @@ belief.extract <- function(df){
                         na.rm=TRUE)
       
       belief.RT$value<-as.numeric(levels(belief.RT$value))[belief.RT$value]
-      belief.RT <- as.data.frame(cast(belief.RT, trial.type~trial.conditionB~trial.conditionD, mean))
+      belief.RT <- as.data.frame(reshape::cast(belief.RT, trial.type~trial.conditionB~trial.conditionD, mean))
       
       # spit out the data frame containing the variables of interest
       data.frame(

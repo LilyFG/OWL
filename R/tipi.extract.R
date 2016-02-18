@@ -8,7 +8,7 @@ tipi.extract <- function(df){
       tipi <- tipi[complete.cases(tipi),c("subscale","score")]
       if(nrow(tipi)==10){
         tipim <- reshape::melt.data.frame(tipi, id="subscale")
-        tipi <- cast(tipim, subscale~variable, sum)
+        tipi <- reshape::cast(tipim, subscale~variable, sum)
         
         data.frame(
           tipi.emotional.stability = tipi$score[1],

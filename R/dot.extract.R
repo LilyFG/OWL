@@ -12,12 +12,12 @@ dot.extract <- function(df){
                           c("accuracy", "trial.selfOther", "trial.consistency")], 
                       id=c("trial.selfOther", "trial.consistency"),
                       na.rm=TRUE)
-      dot.acc <- as.data.frame(cast(dot.acc, trial.selfOther~trial.consistency~variable, mean))
+      dot.acc <- as.data.frame(reshape::cast(dot.acc, trial.selfOther~trial.consistency~variable, mean))
       dot.RT <- reshape::melt.data.frame(dot[dot$phase==3 & dot$accuracy==1 & dot$trial.trialType=='neutral' & dot$trial.correctResponse=='yes',  
                          c("responseTime", "trial.selfOther", "trial.consistency")], 
                      id=c("trial.selfOther", "trial.consistency"),
                      na.rm=TRUE)
-      dot.RT <- as.data.frame(cast(dot.RT, trial.selfOther~trial.consistency~variable, mean))
+      dot.RT <- as.data.frame(reshape::cast(dot.RT, trial.selfOther~trial.consistency~variable, mean))
       
       data.frame(dot.other.con.acc=dot.acc["other", "con.accuracy"],
                  dot.other.incon.acc=dot.acc["other", "incon.accuracy"], 

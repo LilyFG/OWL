@@ -68,15 +68,15 @@ regret.extract <- function(df){
                                                c("rating", "trialType", "trial.unobtained")], 
                                         id=c("trialType", "trial.unobtained"),
                                         na.rm=TRUE)
-      regret.trialCount <- as.data.frame(cast(regret.rating, trialType~trial.obtained~trial.unobtained~variable, length))
-      regret.rating <- as.data.frame(cast(regret.rating, trialType~trial.obtained~trial.unobtained~variable, mean))
-      regret.rating.unobtained <- as.data.frame(cast(regret.rating.unobtained, trialType~trial.unobtained~variable, mean))
+      regret.trialCount <- as.data.frame(reshape::cast(regret.rating, trialType~trial.obtained~trial.unobtained~variable, length))
+      regret.rating <- as.data.frame(reshape::cast(regret.rating, trialType~trial.obtained~trial.unobtained~variable, mean))
+      regret.rating.unobtained <- as.data.frame(reshape::cast(regret.rating.unobtained, trialType~trial.unobtained~variable, mean))
       regret.rating.unobtained$diff <- regret.rating.unobtained$`-200.rating` - regret.rating.unobtained$`200.rating`
       regret.RT <- reshape::melt.data.frame(regret[regret$phase=='test' & regret$trial.obtained %in% c(50, -50) & regret$trial.unobtained %in% c(200, -200), 
                                c("ratingResponseTime", "trialType", "trial.obtained", "trial.unobtained")], 
                         id=c("trialType", "trial.obtained", "trial.unobtained"),
                         na.rm=TRUE)
-      regret.RT <- as.data.frame(cast(regret.RT, trialType~trial.obtained~trial.unobtained~variable, mean))
+      regret.RT <- as.data.frame(reshape::cast(regret.RT, trialType~trial.obtained~trial.unobtained~variable, mean))
       
       data.frame(
         regret.c.m50.m200.rating	= regret.rating[1,1],
