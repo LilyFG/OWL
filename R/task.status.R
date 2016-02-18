@@ -24,7 +24,7 @@ task.status <- function(task, list = bySubject){
   })
   
   
-  df <- data.frame(rbindlist(state, fill=T), row.names = names(list))
+  df <- data.frame(data.table::rbindlist(state, fill=T), row.names = names(list))
   colnames(df) <- c(paste(task, c(".state", ".trials_abandoned"), sep=""))
   df
 }

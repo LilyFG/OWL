@@ -18,6 +18,6 @@ raw.data <- function(data, task, csv = F){
   raw.list <- mapply(FUN = add.names,
                      subject = names(raw.list),
                      data = raw.list)
-  raw.df <- rbindlist(l = raw.list, fill = T)
+  raw.df <- data.table::rbindlist(l = raw.list, fill = T)
   if(csv) write.csv(paste(task, Sys.Date(), ".csv"), raw.data) else   raw.df
 }

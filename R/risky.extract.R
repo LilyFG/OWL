@@ -48,7 +48,7 @@ risky.extract <- function(df){
       # of the risky dataframe and bind the list it creates together into a dataframe
       # this function will put some information about the safe opening events into wide format
       
-      risky <- as.data.frame(rbindlist(apply(risky, 1, function(risky){
+      risky <- as.data.frame(data.table::rbindlist(apply(risky, 1, function(risky){
         # check that it's a proper trial (i.e. that it was either bust or not bust)
         if(!is.na(risky$bust)){
           #if it was not bust (i.e. they banked)

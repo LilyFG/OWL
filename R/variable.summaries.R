@@ -25,7 +25,7 @@ variable.summaries <- function(task, data.sum){
       }
     })
     s2 <- lapply(summary_list, function(df) data.frame(as.list(df)))
-    data.frame(rbindlist(s2, fill = T), row.names = names(s2))
+    data.frame(data.table::rbindlist(s2, fill = T), row.names = names(s2))
   } else data.frame(as.list(summary(summary_data[,grep(paste(task, ".", sep=""), 
                                                        names(summary_data))])), 
                     row.names = names(summary_data)[grep(paste(task, ".", sep=""), names(summary_data))])
