@@ -9,7 +9,7 @@
 #' raw.data(bySubject, "fp")
 #' @export
 #'
-raw.data <- function(data, task, csv = F){
+raw.data <- function(data, task){
   raw.list <- lapply(data, split.task.results, task = task)
   add.names <- function(subject, data){
     if(!is.null(data)) data$subject <- rep(subject, nrow(data))
@@ -18,11 +18,5 @@ raw.data <- function(data, task, csv = F){
   raw.list <- mapply(FUN = add.names,
                      subject = names(raw.list),
                      data = raw.list)
-  raw.df <- data.table::rbindlist(l = raw.list, fill = T)
-  if(csv){
-    lapply(raw.data, function(x){
-      if(is.list(x)) as.character(x)else x
-    })
-    write.csv(paste(task, Sys.Date(), ".csv"), raw.data)
-    } else   raw.df
+  data.table::rbindlist(l = raw.list, fill = T)
 }
