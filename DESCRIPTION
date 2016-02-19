@@ -5,7 +5,7 @@ Authors@R: person("Lily", "FitzGibbon", email = "l.fitzgibbon@bham.ac.uk", role 
 Description: This package contains functions, code snippets, sample data etc.
     for extracting and analysing OWL data.
 Depends:
-    R (>= 3.1.1)
+    R (>= 3.1.0)
 License: What license is it under?
 Imports:
     plyr,
