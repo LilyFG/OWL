@@ -11,6 +11,7 @@
 #'
 raw.data <- function(data, task){
   raw.list <- lapply(data, split.task.results, task = task)
+  add.variables(data, task)
   add.names <- function(subject, data){
     if(!is.null(data)) data$subject <- rep(subject, nrow(data))
     data
