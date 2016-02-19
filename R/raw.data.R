@@ -21,7 +21,7 @@ raw.data <- function(data, task, csv = F){
   raw.df <- data.table::rbindlist(l = raw.list, fill = T)
   if(csv){
     lapply(raw.data, function(x){
-      if(is.list(x)) as.character(x)
+      if(is.list(x)) as.character(x)else x
     })
     write.csv(paste(task, Sys.Date(), ".csv"), raw.data)
     } else   raw.df
