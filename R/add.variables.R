@@ -40,12 +40,16 @@ add.variables <- function(data, task){
               data
             },
             'demo' = data,
+<<<<<<< HEAD
             'health' = {
               data <- rbind.fill(data, 
                                  data$followup[data$question == "Do you smoke?"][1][[1]],
                                  data$followup[data$question == "Do you drink alcohol?"][1][[1]])
               data
               },
+=======
+            'health' = data,
+>>>>>>> 884d07d01db286c15d7c22b73a021c650f2cadb3
             'bis' = data,
             'aq' = data,
             'dffs' = data,
