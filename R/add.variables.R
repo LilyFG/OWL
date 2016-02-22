@@ -58,8 +58,6 @@ add.variables <- function(data, task){
 
               liking$value <- symbols$values[match(liking$symbol, symbols$symbols)]
 
-              print(liking)
-
               data[,c("BL", "SL", "Z", "SW", "BW")] <- NA
               data[!is.na(data$phase) & data$phase=="pre",c("BL", "SL", "Z", "SW", "BW")] <- liking[order(match(liking$value, c("BL", "SL", "Z", "SW", "BW"))), "pre.ratings"]
               data[!is.na(data$phase) & data$phase=="post", c("BL", "SL", "Z", "SW", "BW")] <- liking[order(match(liking$value, c("BL", "SL", "Z", "SW", "BW"))), "post.ratings"]
