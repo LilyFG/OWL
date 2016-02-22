@@ -2,7 +2,7 @@ add.variables <- function(data, task){
   if(!is.null(data)){
     switch (task,
             "learning" = {
-
+              data <- as.data.frame(data)
               # first we are going to calculate some useful variables and add them to the results data frame
 
               # calculate the trial number from the block number and the trial number within the block
@@ -52,16 +52,16 @@ add.variables <- function(data, task){
 
 
               # create a data frame that holds the liking data
-              liking <- data.frame(pre.ratings = data[1,"symbolRatings"][[1]],
-                                   post.ratings=data[nrow(data), "symbolRatings"][[1]],
+              liking <- data.frame(pre.ratings = data$symbolRatings[1][[1]],
+                                   post.ratings=data$symbolRatings[nrow(data)][[1]],
                                    symbol = data$symbolOrder[1][[1]]+1, stringsAsFactors = F)
 
               liking$value <- symbols$values[match(liking$symbol, symbols$symbols)]
 
+              print(liking)
 
               data[,c("BL", "SL", "Z", "SW", "BW")] <- NA
-              liking[order(match(liking$value, c("BL", "SL", "Z", "SW", "BW"))), c("pre.ratings", "post.ratings")]
-              data[data$phase=="pre", c("BL", "SL", "Z", "SW", "BW")] <- liking[order(match(liking$value, c("BL", "SL", "Z", "SW", "BW"))), "pre.ratings"]
+              data[data$phase=="pre",][,c("BL", "SL", "Z", "SW", "BW")] <- liking[order(match(liking$value, c("BL", "SL", "Z", "SW", "BW"))), "pre.ratings"]
               data[data$phase=="post", c("BL", "SL", "Z", "SW", "BW")] <- liking[order(match(liking$value, c("BL", "SL", "Z", "SW", "BW"))), "post.ratings"]
 
 
