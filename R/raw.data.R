@@ -23,11 +23,8 @@ raw.data <- function(data, task){
 
   add.names <- function(subject, subject.number, data){
     if(!is.null(data)) {
-      print(nrow(data))
-      data$subject <- rep(subject, nrow(data))
-      data$subject.number <- rep(subject.number, nrow(data))
+      data.frame(subject.id = rep(subject, nrow(data)), subject.number = rep(subject.number, nrow(data)), data)
     }
-    data
 
   }
 
