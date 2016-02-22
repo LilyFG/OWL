@@ -21,16 +21,12 @@ subjectVars <- function(tasks, list = bySubject){
   data2 <- data2[, unique(colnames(data2))]
 
   # rename the column 'x' as subject_id
-<<<<<<< HEAD
   data2$subject.id <- data2$x
-=======
-  data2$subject <- data2$x
->>>>>>> 6d9b01796f86941987e75d32dceaf7bc759de0a9
 
   # remove the some excess columns using 'select' argument of the subset function
   data2 <- subset(data2, select=-c(Row.names,x))
 
-  data2 <- data.frame(data2, subject.number = seq(1, nrow(data2)))
+  data2 <- data.frame(subject.number = seq(1, nrow(data2)), data2)
 
   data2
 }
