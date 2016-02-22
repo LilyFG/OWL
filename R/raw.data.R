@@ -23,7 +23,7 @@ raw.data <- function(data, task){
   demo <- demo.extract(bySubject)
 
   raw.list <- mapply(FUN = function(raw.data, demo.data){
-    if(!is.null(raw.data)){
+    if(!is.null(raw.data) & !is.null(demo)){
       data.frame(raw.data, rep(demo, nrow(raw.data)))
     }
   },
