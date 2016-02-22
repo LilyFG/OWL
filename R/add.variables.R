@@ -88,9 +88,31 @@ add.variables <- function(data, task){
             'belief' = data,
             'dot' = data,
             'social' = data,
-            'fp' = data,
-            'fp2' = data,
-            'fp3' = data,
+            'fp' = {
+              data$accuracy[data$trial.isCorrect == 'TRUE'] <- 1
+
+              # now we need to differentiate between some erroneous responses
+              data$accuracy[data$trial.staircaseType == 'noGo' & data$trial.isCorrect == 'FALSE'] <- 0
+              data$accuracy[data$trial.staircaseType %in% c("selection1","selection2") & data$result.response == 'ok' & data$trial.isCorrect == 'FALSE'] <- 0
+              data$accuracy[data$trial.staircaseType %in% c("selection1","selection2") & data$result.response != 'ok' & data$trial.isCorrect == 'FALSE'] <- NA
+
+              data},
+            'data' = {
+              data$accuracy[data$trial.isCorrect == 'TRUE'] <- 1
+              data$accuracy[data$result.response == 'ok' & data$trial.isCorrect == 'FALSE'] <- 0
+              data$accuracy[data$result.response != 'ok' & data$trial.isCorrect == 'FALSE'] <- NA
+
+              data$kind <- ifelse(data$phase=="test", data[,c("trial.right.kind", "trial.left.kind")][!is.na(data[,c("trial.right.kind", "trial.left.kind")])], NA)
+
+              data},
+            'fp3' = {
+              fp3$accuracy[fp3$trial.isCorrect == 'TRUE'] <- 1
+              fp3$accuracy[fp3$result.response == 'ok' & fp3$trial.isCorrect == 'FALSE'] <- 0
+              fp3$accuracy[fp3$result.response != 'ok' & fp3$trial.isCorrect == 'FALSE'] <- NA
+
+              fp3$kind <- ifelse(fp3$phase=="test", fp3[,c("trial.right.kind", "trial.left.kind")][!is.na(fp3[,c("trial.right.kind", "trial.left.kind")])], NA)
+
+              data},
             'bonus' = data)
 
   }
