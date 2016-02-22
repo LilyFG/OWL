@@ -22,9 +22,13 @@ raw.data <- function(data, task){
 
   demo <- demo.extract(bySubject)
 
-  raw.list <- mapply(FUN = data.frame,
-                     raw.list,
-                     demo)
+  raw.list <- mapply(FUN = function(raw.data, demo.data){
+    if(!is.null(raw.data)){
+      data.frame(raw.data, rep(demo, nrow(raw.data)))
+    }
+  },
+  raw.list,
+  demo)
 
   # apply the add.names function to the raw data taking data, list names and list sequence as arguments
   raw.list <- mapply(FUN = add.names,
