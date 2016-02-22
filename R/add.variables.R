@@ -61,8 +61,8 @@ add.variables <- function(data, task){
               print(liking)
 
               data[,c("BL", "SL", "Z", "SW", "BW")] <- NA
-              data[data$phase=="pre",][,c("BL", "SL", "Z", "SW", "BW")] <- liking[order(match(liking$value, c("BL", "SL", "Z", "SW", "BW"))), "pre.ratings"]
-              data[data$phase=="post", c("BL", "SL", "Z", "SW", "BW")] <- liking[order(match(liking$value, c("BL", "SL", "Z", "SW", "BW"))), "post.ratings"]
+              data[!is.na(data$phase) & data$phase=="pre",c("BL", "SL", "Z", "SW", "BW")] <- liking[order(match(liking$value, c("BL", "SL", "Z", "SW", "BW"))), "pre.ratings"]
+              data[!is.na(data$phase) & data$phase=="post", c("BL", "SL", "Z", "SW", "BW")] <- liking[order(match(liking$value, c("BL", "SL", "Z", "SW", "BW"))), "post.ratings"]
 
 
               data
