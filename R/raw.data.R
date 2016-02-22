@@ -12,6 +12,7 @@
 raw.data <- function(data, task){
   raw.list <- lapply(data, split.task.results, task = task)
   raw.list <- lapply(raw.list, add.variables, task)
+<<<<<<< HEAD
   #   add.demo <- function(data){
   #     if(!is.null(data)) {
   #     }
@@ -25,6 +26,22 @@ raw.data <- function(data, task){
       # create data frame with subject id, subject number and data
       data.frame(subject.id = rep(subject, nrow(data)), subject.number = rep(subject.number, nrow(data)))
     }
+=======
+#   add.demo <- function(data){
+#     if(!is.null(data)) {
+#     }
+#   }
+#   if(task!= "demo"){
+#     raw.list <- lapply(raw.list, add.demo)
+#   }
+  add.names <- function(subject, subject.number, data){
+    if(!is.null(data)) {
+      print(nrow(data))
+      data$subject <- rep(subject, nrow(data))
+      data$subject.number <- rep(subject.number, nrow(data))
+    }
+    data
+>>>>>>> 6d9b01796f86941987e75d32dceaf7bc759de0a9
   }
 
   # apply the add.names function to the raw data taking data, list names and list sequence as arguments
