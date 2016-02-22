@@ -24,8 +24,6 @@ raw.data <- function(data, task){
 
   raw.list <- mapply(FUN = function(raw.data, demo.data){
     if(!is.null(raw.data) & !is.null(demo.data)){
-      print(nrow(raw.data))
-      print(rep(demo.data, nrow(raw.data)))
       data.frame(raw.data, rep(demo.data, nrow(raw.data)))
     }
   },
