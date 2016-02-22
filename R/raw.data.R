@@ -2,6 +2,7 @@
 #'
 #' @param task is the task of interest
 #' @param data is the list of subject data (defaults to bySubject)
+#' @param demo adds demographic data to the raw data frame. Defaults to TRUE
 #'
 #' @return a data frame containing raw data for all participants who have completed the task
 #'
@@ -9,7 +10,7 @@
 #' raw.data(bySubject, "fp")
 #' @export
 #'
-raw.data <- function(data, task){
+raw.data <- function(data, task, demo = T){
   raw.list <- lapply(data, split.task.results, task = task)
   raw.list <- lapply(raw.list, add.variables, task)
 
@@ -19,17 +20,17 @@ raw.data <- function(data, task){
     }
 
   }
+  if(demo){
+    demo <- demo.extract(bySubject)
 
-  demo <- demo.extract(bySubject)
-
-  raw.list <- mapply(FUN = function(raw.data, demo.data){
-    if(!is.null(raw.data) & !is.null(demo.data)){
-      data.frame(demo.data, raw.data)
-    }
-  },
-  raw.list,
-  demo)
-
+    raw.list <- mapply(FUN = function(raw.data, demo.data){
+      if(!is.null(raw.data) & !is.null(demo.data)){
+        data.frame(demo.data, raw.data)
+      }
+    },
+    raw.list,
+    demo)
+  }
   # apply the add.names function to the raw data taking data, list names and list sequence as arguments
   raw.list <- mapply(FUN = add.names,
                      subject = names(raw.list),
