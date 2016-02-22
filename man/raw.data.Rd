@@ -4,7 +4,7 @@
 \alias{raw.data}
 \title{create a data frame containing all the raw data for the participants}
 \usage{
-raw.data(data, task, csv = F)
+raw.data(data, task)
 }
 \arguments{
 \item{data}{is the list of subject data (defaults to bySubject)}

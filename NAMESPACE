@@ -2,6 +2,7 @@
 
 S3method(split,task.results)
 export(extract_task)
+export(format_for_csv)
 export(import.owl)
 export(owl_palettes)
 export(raw.data)
