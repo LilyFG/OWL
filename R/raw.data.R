@@ -12,12 +12,24 @@
 raw.data <- function(data, task){
   raw.list <- lapply(data, split.task.results, task = task)
   raw.list <- lapply(raw.list, add.variables, task)
-  add.names <- function(subject, data){
-    if(!is.null(data)) data$subject <- rep(subject, nrow(data))
+#   add.demo <- function(data){
+#     if(!is.null(data)) {
+#     }
+#   }
+#   if(task!= "demo"){
+#     raw.list <- lapply(raw.list, add.demo)
+#   }
+  add.names <- function(subject, subject.number, data){
+    if(!is.null(data)) {
+      print(nrow(data))
+      data$subject <- rep(subject, nrow(data))
+      data$subject.number <- rep(subject.number, nrow(data))
+    }
     data
   }
   raw.list <- mapply(FUN = add.names,
                      subject = names(raw.list),
+                     subject.number = seq(1, length(raw.list), by = 1),
                      data = raw.list)
   data.table::rbindlist(l = raw.list, fill = T)
 }
