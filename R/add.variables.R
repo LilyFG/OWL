@@ -85,7 +85,12 @@ add.variables <- function(data, task){
             'counter' = data,
             'regret' = data,
             'risky' = data,
-            'belief' = data,
+            'belief' = {
+              data$trial.conditionD[data$trial.type == "C"] <- NA
+              data$accuracy[data$response == data$trial.correctResponse] <- 1
+              data$accuracy[is.na(data$accuracy) & data$response %in% c("red","blue")] <- 0
+              data
+            },
             'dot' = data,
             'social' = data,
             'fp' = {
