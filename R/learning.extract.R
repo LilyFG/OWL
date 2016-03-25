@@ -78,7 +78,10 @@ learning.extract <- function(df){
         data.frame(trials.75 = ifelse(sum(predict(object = fit, newdata = data.frame(exposure=seq(1:nrow(df))), type="response")>0.75), 
                                which.max(predict(object = fit, newdata = data.frame(exposure=seq(1:nrow(df))), type="response")>0.75),
                                NA),
-                   max.probability = max(predict(object = fit, newdata = data.frame(exposure=seq(1:nrow(df))), type="response")))
+                   max.probability = max(predict(object = fit, newdata = data.frame(exposure=seq(1:nrow(df))), type="response")),
+                   mean.early = mean(df$correct[1:10], na.rm = T),
+                   mean.late = mean(df$correct[11:20], na.rm = T)
+                   )
         
       }))
       
@@ -94,7 +97,7 @@ learning.extract <- function(df){
         learning.totalScore	=	 sum(learning$points, na.rm=TRUE),
         learning.totalAcc	=	 mean(learning$correct, na.rm=TRUE),
         learning.total.trials.75 = trials.to.75.total,
-        learning.total.max.probability <- max.probability,
+        learning.total.max.probability = max.probability,
         learning.actionErrors	=	 length(learning$correct[is.na(learning$correct) & learning$phase=='test']),
         
         trials.to.75, # add the whole trials.to.75 data frame
