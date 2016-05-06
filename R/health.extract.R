@@ -32,6 +32,13 @@ health.extract <- function(df){
       }
   }
   
+  # set some trimming parameters to remove silly responses
+  minWeight <- 30
+  maxWeight <- 300
+  
+  minHeight <- 70
+  maxHeight <- 250
+  
   # then apply a the data extraction function across that list where it is not empty
   lapply(health, function(health){
     if(!is.null(health)){
@@ -64,6 +71,17 @@ health.extract <- function(df){
         health.socialMedia	=	tail(health[health$id==18,"score"],n=1),
         health.vegServings	=	tail(health[health$id==19,"score"],n=1),
         health.fruitServings	=	tail(health[health$id==20,"score"],n=1),
+        # after trimming out silly responses, calculate BMI
+        health$bmi <- ifelse(!is.na(health$health.weight) & 
+                                health$health.weight != "skipped" & 
+                                health$health.weight > minWeight & 
+                                health$health.weight < maxWeight &
+                                !is.na(health$health.height) & 
+                                health$health.height != "skipped" & 
+                                health$health.height > minHeight & 
+                                health$health.height < maxHeight,
+                                round(health$health.weight/((health$health.height/100)^2), digits = 1),
+                              NA),
         stringsAsFactors = F)
     }
   })
