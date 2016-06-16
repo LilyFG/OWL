@@ -39,8 +39,9 @@ belief.extract <- function(df){
                         measure.vars = "responseTime",
                         na.rm=TRUE)
 
-      belief.RT$value<-as.numeric(levels(belief.RT$value))[belief.RT$value]
-      belief.RT <- as.data.frame(reshape::cast(belief.RT, trial.type~trial.conditionB~trial.conditionD, mean))
+
+      belief.RT.mean <- as.data.frame(reshape::cast(belief.RT, trial.type~trial.conditionB~trial.conditionD, mean))
+      belief.RT.N <- as.data.frame(reshape::cast(belief.RT, trial.type~trial.conditionB~trial.conditionD, length))
 
       # spit out the data frame containing the variables of interest
       data.frame(
@@ -50,12 +51,18 @@ belief.extract <- function(df){
         belief.T.B.Dx.acc = belief.acc["T","B+.D-"],
         belief.T.Bx.D.acc = belief.acc["T","B-.D+"],
         belief.T.B.D.acc = belief.acc["T","B+.D+"],
-        belief.C.Bx.rt = belief.RT["C","B-.NA"],
-        belief.C.B.rt = belief.RT["C","B+.NA"],
-        belief.T.Bx.Dx.rt = belief.RT["T","B-.D-"],
-        belief.T.B.Dx.rt = belief.RT["T","B+.D-"],
-        belief.T.Bx.D.rt = belief.RT["T","B-.D+"],
-        belief.T.B.D.rt = belief.RT["T","B+.D+"],
+        belief.C.Bx.rt = belief.RT.mean["C","B-.NA"],
+        belief.C.B.rt = belief.RT.mean["C","B+.NA"],
+        belief.T.Bx.Dx.rt = belief.RT.mean["T","B-.D-"],
+        belief.T.B.Dx.rt = belief.RT.mean["T","B+.D-"],
+        belief.T.Bx.D.rt = belief.RT.mean["T","B-.D+"],
+        belief.T.B.D.rt = belief.RT.mean["T","B+.D+"],
+        belief.C.Bx.rt.N = belief.RT.N["C","B-.NA"],
+        belief.C.B.rt.N = belief.RT.N["C","B+.NA"],
+        belief.T.Bx.Dx.rt.N = belief.RT.N["T","B-.D-"],
+        belief.T.B.Dx.rt.N = belief.RT.N["T","B+.D-"],
+        belief.T.Bx.D.rt.N = belief.RT.N["T","B-.D+"],
+        belief.T.B.D.rt.N = belief.RT.N["T","B+.D+"],
         belief.total.timeouts = length(belief$response[belief$response=="noresponse"]),
         belief.C.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "C"]),
         belief.T.Bx.Dx.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "T" & belief$trial.conditionB == "B-" & belief$trial.conditionD == "D-"]),
