@@ -57,7 +57,7 @@ belief.extract <- function(df){
         belief.T.Bx.D.rt = belief.RT["T","B-.D+"],
         belief.T.B.D.rt = belief.RT["T","B+.D+"],
         belief.total.timeouts = length(belief$response[belief$response=="noresponse"]),
-        belief.C.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "C"),
+        belief.C.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "C"]),
         belief.T.Bx.Dx.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "T" & belief$trial.conditionB == "B-" & belief$trial.conditionD == "D-"]),
         belief.T.B.Dx.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "T" & belief$trial.conditionB == "B+" & belief$trial.conditionD == "D-"]),
         belief.T.Bx.D.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "T" & belief$trial.conditionB == "B-" & belief$trial.conditionD == "D+"]),
