@@ -11,6 +11,9 @@ belief.extract <- function(df){
       # trim the data to exclude practice 
       belief <- belief[belief$phase==3,]
       
+      # recode response time as numeric, for some reason it comes out as text
+      belief$responseTime <- as.numeric(belief$responseTime)
+      
       # determine response accuracy
       belief$trial.conditionD[belief$trial.type == "C"] <- NA
       belief$accuracy[belief$response == belief$trial.correctResponse] <- 1
