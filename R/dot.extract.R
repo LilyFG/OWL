@@ -51,7 +51,7 @@ dot.extract <- function(df){
                  dot.self.con.timeouts=length(dot$response[dot$response=="noresponse" & "trial.selfOther"=="self" & "trial.consistency"=="con"]),
                  dot.self.incon.timeouts=length(dot$response[dot$response=="noresponse" & "trial.selfOther"=="self" & "trial.consistency"=="incon"]),
                  
-                 dot.Ntrials.sub300ms=sum(dot$responseTime<300),
+                 dot.Ntrials.sub300ms=sum(dot$responseTime<300, na.rm=T),
                  
                  # report whether the p-value of the binomial test was below 0.05, i.e. performance on 'self' trials was above chance (TRUE)
                  dot.self.above.chance=dot.self.test$p.value<0.05
