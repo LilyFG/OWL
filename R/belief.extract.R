@@ -7,11 +7,21 @@ belief.extract <- function(df){
   lapply(belief, function(belief){
     #if there is data for this task for this subject
     if(!is.null(belief)){ #if there is data for this task for this subject
+    
+      # trim the data to exclude practice 
+      belief <- belief[belief$phase==3,]
+      
       # determine response accuracy
       belief$trial.conditionD[belief$trial.type == "C"] <- NA
       belief$accuracy[belief$response == belief$trial.correctResponse] <- 1
-      #
+      
+      # if a response was made but it was not the correct response, accuracy is 0, otherwise, missing
       belief$accuracy[is.na(belief$accuracy) & belief$response %in% c("red","blue")] <- 0
+      
+      # run the binomial test to determine if performance is above chance
+      belief.test <- binom.test(sum(belief$accuracy, na.rm = T), sum(belief$response %in% c("red","blue"), na.rm = T), p=0.5, alternative="greater")
+      
+      # create a new data frame for calculating mean accuracy by condition
       belief.acc <- reshape::melt.data.frame(belief[belief$phase==3,c("trial.type", "accuracy", "trial.conditionB",
                                                   "trial.conditionD")],
                          id=c("trial.type", "trial.conditionB", "trial.conditionD"),
@@ -43,7 +53,13 @@ belief.extract <- function(df){
         belief.T.B.Dx.rt = belief.RT["T","B+.D-"],
         belief.T.Bx.D.rt = belief.RT["T","B-.D+"],
         belief.T.B.D.rt = belief.RT["T","B+.D+"],
-        belief.timeouts = length(belief$response[belief$response=="noresponse"]),
+        belief.total.timeouts = length(belief$response[belief$response=="noresponse"]),
+        belief.T.Bx.Dx.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "T" & belief$trial.conditionB == "B-" & belief$trial.conditionD == "D-"]),
+        belief.T.B.Dx.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "T" & belief$trial.conditionB == "B+" & belief$trial.conditionD == "D-"]),
+        belief.T.Bx.D.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "T" & belief$trial.conditionB == "B-" & belief$trial.conditionD == "D+"]),
+        belief.T.B.D.timeouts = length(belief$response[belief$response=="noresponse" & belief$trial.type == "T" & belief$trial.conditionB == "B+" & belief$trial.conditionD == "D+"]),
+        belief.aboveChance = belief.test$p.value < 0.05,
+        belief.Ntrials.sub300ms=sum(belief$responseTime<300, na.rm=T),
         stringsAsFactors = F
       )
     }
