@@ -32,7 +32,8 @@ dot.extract <- function(df){
                      id=c("trial.selfOther", "trial.consistency"),
                      na.rm=TRUE)
       # calculate the mean RT including only trials for which a response was made
-      dot.RT <- as.data.frame(reshape::cast(dot.RT, trial.selfOther~trial.consistency~variable, mean))
+      dot.RT.mean <- as.data.frame(reshape::cast(dot.RT, trial.selfOther~trial.consistency~variable, mean))
+      dot.RT.N <- as.data.frame(reshape::cast(dot.RT, trial.selfOther~trial.consistency~variable, length))
       
       data.frame(dot.self.total.acc=length(dot$accuracy["trial.selfOther"=="self"]), 
                  dot.total.timeouts=length(dot$response[dot$response=="noresponse"]),
@@ -40,10 +41,15 @@ dot.extract <- function(df){
                  dot.other.incon.acc=dot.acc["other", "incon.accuracy"], 
                  dot.self.con.acc=dot.acc["self", "con.accuracy"],
                  dot.self.incon.acc=dot.acc["self", "incon.accuracy"], 
-                 dot.other.con.RT=dot.RT["other", "con.responseTime"],
-                 dot.other.incon.RT=dot.RT["other", "incon.responseTime"], 
-                 dot.self.con.RT=dot.RT["self", "con.responseTime"],
-                 dot.self.incon.RT=dot.RT["self", "incon.responseTime"],  
+                 dot.other.con.RT=dot.RT.mean["other", "con.responseTime"],
+                 dot.other.incon.RT=dot.RT.mean["other", "incon.responseTime"], 
+                 dot.self.con.RT=dot.RT.mean["self", "con.responseTime"],
+                 dot.self.incon.RT=dot.RT.mean["self", "incon.responseTime"],  
+                 
+                 dot.other.con.RT.N=dot.RT.N["other", "con.responseTime"],
+                 dot.other.incon.RT.N=dot.RT.N["other", "incon.responseTime"], 
+                 dot.self.con.RT.N=dot.RT.N["self", "con.responseTime"],
+                 dot.self.incon.RT.N=dot.RT.N["self", "incon.responseTime"],  
                  
                  # calculate N timeouts for each trial type on critical trials
                  dot.other.con.timeouts=length(dot$response[dot$response=="noresponse" & dot$trial.selfOther=="other" & dot$trial.consistency=="con"]),
