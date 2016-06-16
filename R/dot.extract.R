@@ -15,8 +15,9 @@ dot.extract <- function(df){
       dot$accuracy[dot$response == dot$trial.correctResponse] <- 1
       dot$accuracy[is.na(dot$accuracy) & dot$response %in% c("yes","no")] <- 0
       
-      # calculate the binomial test to determine whether N correct on 'self' trials is greater than chance
-      dot.test <- binom.test(sum(dot$accuracy[dot$trial.selfOther=="self"] == 1, na.rm=T), sum(dot$accuracy[dot$trial.selfOther=="self"] %in% c(0,1), na.rm=T), p = 0.5, alternative = "greater")
+      # calculate the binomial tests to determine whether N correct on 'self' and 'other' trials is greater than chance
+      dot.self.test <- binom.test(sum(dot$accuracy[dot$trial.selfOther=="self"], na.rm=T), sum(dot$accuracy[dot$trial.selfOther=="self"] %in% c(0,1), na.rm=T), p = 0.5, alternative = "greater")
+      dot.other.test <- binom.test(sum(dot$accuracy[dot$trial.selfOther=="self"], na.rm=T), sum(dot$accuracy[dot$trial.selfOther=="other"] %in% c(0,1), na.rm=T), p = 0.5, alternative = "greater")
       
       # create a new dataframe for the accuracy data including only the accuracy variable and the two trial type variables: self/other and consistency
       dot.acc <- reshape::melt.data.frame(dot[, c("accuracy", "trial.selfOther", "trial.consistency")], 
@@ -53,7 +54,8 @@ dot.extract <- function(df){
                  dot.Ntrials.sub300ms=sum(dot$responseTime<300),
                  
                  # report whether the p-value of the binomial test was below 0.05, i.e. performance on 'self' trials was above chance (TRUE)
-                 dot.above.chance=dot.test$p.value<0.05
+                 dot.self.above.chance=dot.self.test$p.value<0.05
+                 dot.other.above.chance=dot.other.test$p.value<0.05
       )
     }
   })
