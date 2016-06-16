@@ -17,7 +17,7 @@ dot.extract <- function(df){
       
       # calculate the binomial tests to determine whether N correct on 'self' and 'other' trials is greater than chance
       dot.self.test <- binom.test(sum(dot$accuracy[dot$trial.selfOther=="self"], na.rm=T), sum(dot$accuracy[dot$trial.selfOther=="self"] %in% c(0,1), na.rm=T), p = 0.5, alternative = "greater")
-      dot.other.test <- binom.test(sum(dot$accuracy[dot$trial.selfOther=="self"], na.rm=T), sum(dot$accuracy[dot$trial.selfOther=="other"] %in% c(0,1), na.rm=T), p = 0.5, alternative = "greater")
+      dot.other.test <- binom.test(sum(dot$accuracy[dot$trial.selfOther=="other"], na.rm=T), sum(dot$accuracy[dot$trial.selfOther=="other"] %in% c(0,1), na.rm=T), p = 0.5, alternative = "greater")
       
       # create a new dataframe for the accuracy data including only the accuracy variable and the two trial type variables: self/other and consistency
       dot.acc <- reshape::melt.data.frame(dot[, c("accuracy", "trial.selfOther", "trial.consistency")], 
