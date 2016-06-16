@@ -17,7 +17,7 @@ dot.extract <- function(df){
       
       # calculate the binomial tests to determine whether N correct on 'self' and 'other' trials is greater than chance
       dot.self.test <- binom.test(sum(dot$accuracy[dot$trial.selfOther=="self"], na.rm=T), sum(dot$accuracy[dot$trial.selfOther=="self"] %in% c(0,1), na.rm=T), p = 0.5, alternative = "greater")
-      dot.other.test <- binom.test(sum(dot$accuracy[dot$trial.selfOther=="other"], na.rm=T), sum(dot$accuracy[dot$trial.selfOther=="other"] %in% c(0,1), na.rm=T), p = 0.5, alternative = "greater")
+      dot.other.test <- binom.test(sum(dot$accuracy[dot$trial.selfOther=="self"], na.rm=T), sum(dot$accuracy[dot$trial.selfOther=="other"] %in% c(0,1), na.rm=T), p = 0.5, alternative = "greater")
       
       # create a new dataframe for the accuracy data including only the accuracy variable and the two trial type variables: self/other and consistency
       dot.acc <- reshape::melt.data.frame(dot[, c("accuracy", "trial.selfOther", "trial.consistency")], 
@@ -46,10 +46,10 @@ dot.extract <- function(df){
                  dot.self.incon.RT=dot.RT["self", "incon.responseTime"],  
                  
                  # calculate N timeouts for each trial type on critical trials
-                 dot.other.con.timeouts=length(dot$response[dot$response=="noresponse" & "trial.selfOther"=="other" & "trial.consistency"=="con"]),
-                 dot.other.incon.timeouts=length(dot$response[dot$response=="noresponse" & "trial.selfOther"=="other" & "trial.consistency"=="incon"]),
-                 dot.self.con.timeouts=length(dot$response[dot$response=="noresponse" & "trial.selfOther"=="self" & "trial.consistency"=="con"]),
-                 dot.self.incon.timeouts=length(dot$response[dot$response=="noresponse" & "trial.selfOther"=="self" & "trial.consistency"=="incon"]),
+                 dot.other.con.timeouts=length(dot$response[dot$response=="noresponse" & dot$trial.selfOther=="other" & dot$trial.consistency=="con"]),
+                 dot.other.incon.timeouts=length(dot$response[dot$response=="noresponse" & dot$trial.selfOther=="other" & dot$trial.consistency=="incon"]),
+                 dot.self.con.timeouts=length(dot$response[dot$response=="noresponse" & dot$trial.selfOther=="self" & dot$trial.consistency=="con"]),
+                 dot.self.incon.timeouts=length(dot$response[dot$response=="noresponse" & dot$trial.selfOther=="self" & dot$trial.consistency=="incon"]),
                  
                  dot.Ntrials.sub300ms=sum(dot$responseTime<300, na.rm=T),
                  
