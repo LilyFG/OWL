@@ -44,6 +44,8 @@ risky.extract <- function(df){
       safes.times <- paste(safes, "time", sep=".")
       risky[,safes.times] <- NA
       
+      risky.timeouts = sum(vapply(X = risky$result.safeOpenTimes, is.null, FUN.VALUE = c(TRUE)))
+      
       # apply a function across each row (signified by the 1 in the apply args)
       # of the risky dataframe and bind the list it creates together into a dataframe
       # this function will put some information about the safe opening events into wide format
@@ -94,7 +96,7 @@ risky.extract <- function(df){
         risky.mean.bust = mean(risky$result.safesOpened[risky$previous.bust==1 & risky$trialType=="bust_keep"], na.rm = TRUE),
         risky.mean.notBust = mean(risky$result.safesOpened[risky$previous.bust==0 & risky$trialType=="keep_keep"], na.rm = TRUE),
         risky.indifferencePoint = ip[[1]],
-        risky.timeouts = sum(vapply(X = risky$result.safeOpenTimes, is.null, FUN.VALUE = c(TRUE)))
+        risky.timeouts = risky.timeouts
       )
     }
   })
