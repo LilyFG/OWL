@@ -93,7 +93,8 @@ risky.extract <- function(df){
         risky.mean.smallMiss = mean(risky$result.safesOpened[risky$previous.missed<=2 & risky$trialType=="keep_keep"], na.rm = TRUE),
         risky.mean.bust = mean(risky$result.safesOpened[risky$previous.bust==1 & risky$trialType=="bust_keep"], na.rm = TRUE),
         risky.mean.notBust = mean(risky$result.safesOpened[risky$previous.bust==0 & risky$trialType=="keep_keep"], na.rm = TRUE),
-        risky.indifferencePoint = ip[[1]]
+        risky.indifferencePoint = ip[[1]],
+        risky.timeouts = sum(vapply(X = risky$result.safeOpenTimes, is.null, FUN.VALUE = c(TRUE)))
       )
     }
   })
