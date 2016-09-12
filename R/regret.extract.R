@@ -35,15 +35,15 @@ regret.extract <- function(df){
         regret$wheels.left.y[regret$trialType=='complete' & regret$wheelResponse=='right' & regret$wheels.left.outcome=='yv']
       
       # scale emotion rating to participant's mean and sd
-      regret$rating.original <- regret$rating
-      regret$rating <- NA
-      regret$rating[regret$phase=='test' & 
-                      regret$trial.obtained %in% c(-50, 50) & 
-                      regret$trial.unobtained %in% c(-200, 200)] <- 
-        scale(regret[regret$phase=='test' & 
-                       regret$trial.obtained %in% c(-50, 50) & 
-                       regret$trial.unobtained %in% c(-200, 200), 
-                     "rating.original"])
+#      regret$rating.original <- regret$rating
+#      regret$rating <- NA
+#      regret$rating[regret$phase=='test' & 
+#                      regret$trial.obtained %in% c(-50, 50) & 
+#                      regret$trial.unobtained %in% c(-200, 200)] <- 
+#        scale(regret[regret$phase=='test' & 
+#                       regret$trial.obtained %in% c(-50, 50) & 
+#                       regret$trial.unobtained %in% c(-200, 200), 
+#                     "rating.original"])
       
       #the difference in anticipated disappointment, anticipated regret, expected value and risk are calculated in accordance with Coricelli et al. 2004 and Burnett et al. 2010
       #we're not doing anything with these variables yet, but they would be available for modelling
